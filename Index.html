@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Text</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#141e30,#243b55);
+  color:white;
+}
+
+.card{
+  width:350px;
+  padding:40px;
+  border-radius:20px;
+  text-align:center;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+h1{
+  margin-bottom:20px;
+}
+
+.copy-text{
+  background:#0f172a;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:25px;
+  font-size:20px;
+  color:#00ffcc;
+  border:2px solid rgba(255,255,255,0.1);
+}
+
+.copy-btn{
+  position:relative;
+  width:200px;
+  height:60px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:18px;
+  font-weight:bold;
+  color:white;
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  transition:0.3s;
+  overflow:hidden;
+}
+
+.copy-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(0,114,255,0.6);
+}
+
+.copy-btn:active{
+  transform:scale(0.95);
+}
+
+.btn-text{
+  transition:0.3s;
+}
+
+.checkmark{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  font-size:30px;
+  color:#00ff99;
+  transition:0.4s;
+}
+
+.copied .btn-text{
+  opacity:0;
+}
+
+.copied .checkmark{
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.success{
+  margin-top:20px;
+  opacity:0;
+  color:#00ff99;
+  transition:0.4s;
+}
+
+.show{
+  opacity:1;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h1>Copy Text</h1>
+
+  <!-- CHANGE THIS TEXT -->
+  <div class="copy-text" id="copyText">#X21L82</div>
+
+  <button class="copy-btn" id="copyBtn" onclick="copyNow()">
+    <span class="btn-text">Copy Text</span>
+    <span class="checkmark">✔</span>
+  </button>
+
+  <div class="success" id="successMsg">
+    Text Copied Successfully!
+  </div>
+
+</div>
+
+<script>
+
+function copyNow() {
+
+  const text = document.getElementById("copyText").innerText;
+
+  // Fallback copy method
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+
+  document.body.appendChild(textarea);
+
+  textarea.select();
+  textarea.setSelectionRange(0, 99999);
+
+  document.execCommand("copy");
+
+  document.body.removeChild(textarea);
+
+  // Animation
+  const button = document.getElementById("copyBtn");
+  const success = document.getElementById("successMsg");
+
+  button.classList.add("copied");
+  success.classList.add("show");
+
+  setTimeout(() => {
+    button.classList.remove("copied");
+    success.classList.remove("show");
+  }, 2000);
+
+}
+
+</script>
+
+</body>
+</html>
